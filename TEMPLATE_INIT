@@ -1,0 +1,193 @@
+# Template Initialization Guide
+
+Step-by-step guide to bootstrap a new project from this template.
+
+## Prerequisites
+
+- Node.js 20+
+- pnpm (`npm install -g pnpm`)
+- Expo CLI (`npm install -g expo-cli`)
+- EAS CLI (`npm install -g eas-cli`)
+- An Expo account with a project created at https://expo.dev
+
+## 1. Update Project Identity
+
+### `package.json`
+
+Change these fields:
+
+```json
+{
+  "name": "<new-project-name>",
+  "version": "1.0.0"
+}
+```
+
+### `app.json`
+
+```json
+{
+  "expo": {
+    "name": "<new-project-name>",
+    "slug": "<new-project-name>",
+    "scheme": "<new-project-name>",
+    "owner": "<expo-username>",
+    "version": "1.0.0"
+  }
+}
+```
+
+### `app.config.ts`
+
+Update the fallback defaults (used when env vars are not set):
+
+```typescript
+const expoProjectId = process.env.EXPO_PROJECT_ID ?? '<your-expo-project-id>';
+// ...
+slug: process.env.EXPO_SLUG ?? '<new-project-name>',
+name: process.env.EXPO_NAME ?? '<New Project Name>',
+// ...
+bundleIdentifier: process.env.EXPO_IOS_BUNDLE_IDENTIFIER ?? 'com.<org>.<new-project-name>',
+// ...
+package: process.env.EXPO_ANDROID_PACKAGE ?? 'com.<org>.<new-project-name>',
+```
+
+> Get your Expo project ID from https://expo.dev > Your Project > Settings > Project ID
+
+## 2. Environment Configuration
+
+### `.env.dev.example`
+
+```
+ENV=development
+API_URL=https://example.com
+EXPO_SLUG=<new-project-name>-dev
+EXPO_NAME="DEV - <New Project Name>"
+EXPO_PROJECT_ID=<your-expo-project-id>
+EXPO_IOS_BUNDLE_IDENTIFIER=com.<org>.<new-project-name>.dev
+EXPO_ANDROID_PACKAGE=com.<org>.<new-project-name>.dev
+```
+
+### `.env.prod.example`
+
+```
+ENV=production
+API_URL=https://example.com
+EXPO_SLUG=<new-project-name>
+EXPO_NAME="<New Project Name>"
+EXPO_PROJECT_ID=<your-expo-project-id>
+EXPO_IOS_BUNDLE_IDENTIFIER=com.<org>.<new-project-name>
+EXPO_ANDROID_PACKAGE=com.<org>.<new-project-name>
+```
+
+### `.env.dev`
+
+Copy the dev example to create your local env file:
+
+```bash
+cp .env.dev.example .env.dev
+```
+
+> `.env.dev` is gitignored. Each developer creates their own copy locally.
+
+## 3. Theme Colors (Optional)
+
+Edit `theme/colors.ts` to change the color palette:
+
+```typescript
+export const colors = {
+  darkBlue: '#0A1929',      // Headers, dark backgrounds
+  blue: '#0066FF',           // Primary buttons, accents
+  lightBlue: '#3399FF',      // Active tab, links
+  lightGrayBlue: '#F0F4F8',  // Light mode backgrounds
+  accentBlue: '#00BFFF',     // Secondary accents
+  gray: '#797777',           // Muted text
+  blackGray: '#101212',      // Dark mode backgrounds
+  black: '#000000',
+  white: '#ffffff',
+  transparent: 'transparent',
+};
+```
+
+Files that reference colors (update if you rename properties):
+- `app/+not-found.tsx`
+- `app/(main)/(tabs)/_layout.tsx`
+- `app/(main)/(tabs)/home/_layout.tsx`
+- `app/(main)/(tabs)/profile/_layout.tsx`
+- `scenes/home/Home.tsx`
+- `scenes/profile/Profile.tsx`
+- `scenes/details/Details.tsx`
+- `components/layouts/BottomSheetContents/BottomSheetContents.tsx`
+
+## 4. Update Branding Text
+
+| File | What to change |
+|---|---|
+| `components/layouts/BottomSheetContents/BottomSheetContents.tsx` | "Welcome to Glamour" title |
+| `components/layouts/DrawerContents/DrawerContents.tsx` | "Glamour" text |
+| `README.md` | Project description |
+| `LICENSE` | Copyright holder |
+
+## 5. App Icons & Splash Screen
+
+Replace these image files with your own:
+- `assets/images/logo-lg.png` - App icon and splash screen image
+- `assets/images/logo-sm.png` - Android adaptive icon and web favicon
+
+Splash screen colors are configured in both `app.json` and `app.config.ts`.
+
+## 6. Install & Verify
+
+```bash
+# Install dependencies
+pnpm install
+
+# Initialize git
+git init
+
+# Set up Husky pre-commit hooks
+pnpm run prepare
+
+# Verify everything works
+pnpm run lint          # Should have 0 errors
+pnpm run test          # Should pass all tests
+pnpm run dev:web       # Should launch in browser
+```
+
+## 7. Initial Commit
+
+```bash
+git add .
+git commit -m "Initial project setup"
+```
+
+## Quick Reference: Project Structure
+
+```
+app/                 # Expo Router routes (keep minimal, delegate to scenes)
+components/
+  elements/          # Reusable UI components (Button, Image, etc.)
+  layouts/           # Layout components (headers, drawers, bottom sheets)
+scenes/              # Screen components (main UI logic)
+hooks/               # Custom React hooks
+slices/              # Redux Toolkit slices
+services/            # API and external services
+theme/               # Colors, fonts, styling system
+types/               # TypeScript type definitions
+utils/               # Utility functions (config, deviceInfo)
+providers/           # React context providers (Redux store)
+assets/              # Fonts, images
+```
+
+## Quick Reference: Key Config Files
+
+| File | Purpose |
+|---|---|
+| `.npmrc` | pnpm config (`node-linker=hoisted` required for Expo) |
+| `.env.dev` | Local development environment variables |
+| `app.json` | Expo static config (name, slug, icons, splash) |
+| `app.config.ts` | Expo dynamic config (reads env vars, sets bundle IDs) |
+| `utils/config.ts` | Runtime access to env vars via `expo-constants` |
+| `eslint.config.mjs` | ESLint 9 flat config |
+| `tsconfig.json` | TypeScript strict mode config |
+| `jest.config.ts` | Jest test runner config |
