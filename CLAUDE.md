@@ -125,7 +125,7 @@ utils/               # Utility functions (config, deviceInfo)
 - Use descriptive test names
 - Mock external dependencies
 
-## Navigation (Expo Router v5)
+## Navigation (Expo Router v6)
 
 - Use flat config format (already configured)
 - Keep route files minimal - delegate to scene components
@@ -183,44 +183,44 @@ import { useDataPersist } from '@/hooks';
 
 ## Architecture Notes
 
-- Project upgraded to Expo SDK 54
-- Using React 19.1 with React Native 0.81.4
+- Expo SDK 54 with React 19.1 and React Native 0.81.4
+- pnpm with `node-linker=hoisted` (required for Expo compatibility)
 - ESLint 9 with flat config
-- Directory "pages" was renamed to "scenes"
+- Screen components live in `scenes/` directory
 - TypeScript strict mode enabled (v5.9.2)
-- Custom theme system with dark/light support
+- Custom theme system with dark/light support (black/blue palette)
 - SafeAreaView imported from react-native-safe-area-context (not React Native)
 - Required peer dependencies: @expo/metro-runtime, react-native-worklets
 
 ## Available Scripts
 
 ### Development Commands:
-- `npm run dev` - Start Expo development server for all platforms with cache cleared
-- `npm run dev:ios` - Start development server for iOS simulator only
-- `npm run dev:android` - Start development server for Android emulator only  
-- `npm run dev:web` - Start development server for web browser only
-- `npm run dev:doctor` - Run Expo diagnostics to check project health
+- `pnpm run dev` - Start Expo development server for all platforms with cache cleared
+- `pnpm run dev:ios` - Start development server for iOS simulator only
+- `pnpm run dev:android` - Start development server for Android emulator only  
+- `pnpm run dev:web` - Start development server for web browser only
+- `pnpm run dev:doctor` - Run Expo diagnostics to check project health
 
 ### Building & Deployment:
-- `npm run dev:build:mobile` - Build iOS (IPA) and Android (APK) using EAS Build for development
-- `npm run dev:build:web` - Export static web application to `dist/` directory
-- `npm run dev:serve:web` - Serve the built web app locally (run after `dev:build:web`)
-- `npm run dev:deploy:web` - Build and deploy web app to EAS Hosting
+- `pnpm run dev:build:mobile` - Build iOS (IPA) and Android (APK) using EAS Build for development
+- `pnpm run dev:build:web` - Export static web application to `dist/` directory
+- `pnpm run dev:serve:web` - Serve the built web app locally (run after `dev:build:web`)
+- `pnpm run dev:deploy:web` - Build and deploy web app to EAS Hosting
 
 ### Environment & Configuration:
-- `npm run dev:secret:push` - Upload environment variables from `.env.dev` to EAS secrets
-- `npm run dev:secret:list` - List all environment variables stored in EAS
-- `npm run dev:config:public` - Display current Expo configuration for debugging
+- `pnpm run dev:secret:push` - Upload environment variables from `.env.dev` to EAS secrets
+- `pnpm run dev:secret:list` - List all environment variables stored in EAS
+- `pnpm run dev:config:public` - Display current Expo configuration for debugging
 
 ### Code Quality & Testing:
-- `npm run lint` - Run ESLint to check code quality and style
-- `npm run lint:staged` - Run linting only on staged Git files (used in pre-commit)
-- `npm run format` - Format code using Prettier
-- `npm run test` - Run Jest unit tests
-- `npm run test:watch` - Run Jest tests in watch mode for development
+- `pnpm run lint` - Run ESLint to check code quality and style
+- `pnpm run lint:staged` - Run linting only on staged Git files (used in pre-commit)
+- `pnpm run format` - Format code using Prettier
+- `pnpm run test` - Run Jest unit tests
+- `pnpm run test:watch` - Run Jest tests in watch mode for development
 
 ### Git Hooks:
-- `npm run prepare` - Set up Husky Git hooks for pre-commit quality checks
+- `pnpm run prepare` - Set up Husky Git hooks for pre-commit quality checks
 
 ## When in Doubt
 
